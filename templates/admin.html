@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Welcome</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<style>
+#dem{
+    text-decoration: none;
+}
+</style>
+
+
+<body   style="background-image:url({{ url_for('static', filename='images/black-red.jpg') }});background-attachment: fixed;background-size: cover;">
+      <div style="color: white;margin: 100px" id="demo">
+        
+          <h1>ADMIN INTERFACE</h1>
+            <table>
+                <tr id="demo">
+                    <a href="/logout" style="color: white;margin-left: 80%;">LOGOUT</a>
+                    <a id="dem" @mouseover="mouseOver" @mouseout="mouseout" href="/add" style="color: white;font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;"><h1>* Add Products</h1></a>
+                    <transition name="fade"><p v-show="active">Add products to our website using a form</p></transition>
+                </tr>
+                <tr id="demo1">
+                    <a href="/remove" @mouseover="mouseO" @mouseout="mouseo" style="text-decoration:none;color: white;font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;"><h1>* Remove Products</h1></a>
+                    <p v-show="active1">Remove a product from our website</p>
+
+                </tr>
+                <tr id="demo">
+                    <a href="/fake_reviews" @mouseover="mouseOv" @mouseout="mouseou" style="text-decoration:none;color: white;font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;"><h1>* Display all fake reviews</h1></a>
+                    <p v-show="active3">View all the fake reviews with the reason</p>
+                </tr>
+            </table>
+      </div>
+</body>
+<script>
+    var demo = new Vue({
+    el: '#demo',
+    data: {
+        active: false,
+        active1: false,
+        active3: false
+    },
+    methods: {
+        mouseOver: function(){
+            this.active = !this.active;   
+        },
+        mouseout: function()
+        {
+            this.active = !this.active;
+        },
+        mouseO: function(){
+            this.active1 = !this.active1;   
+        },
+        mouseo: function()
+        {
+            this.active1 = !this.active1;
+        },
+        mouseOv: function(){
+            this.active3 = !this.active3;   
+        },
+        mouseou: function()
+        {
+            this.active3 = !this.active3;
+        }
+    }
+});
+</script>

@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Welcome</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ <style>
+   .split {
+    float: left;
+    width: 45%;
+    margin-left: 42px;
+}
+.left {
+  left: 0;
+}
+
+/* Control the right side */
+.right {
+  float: right;
+  right: 0;
+}
+.Description{
+  height: 80%;
+  min-width: 100%;
+  max-width:100%;
+    display: block;
+}
+</style>
+</head>
+<body  style="background-image:url({{ url_for('static', filename='images/dark.jpg') }});background-attachment: fixed;background-size: cover;">
+    <nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse" style="background: transparent;border: transparent;">
+        <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>                        
+              </button>
+        {% if loggedIn %}          
+            <a class="navbar-brand" href="#" style="color: white;">Hello,{{firstName}}</a>
+        {% else %}
+            <a class="navbar-brand" href="#" style="color: azure;">Welcome to FPR</a>
+        {% endif %} 
+        </div>
+        <div class="nav navbar-nav navbar-right">
+          <ul class="collapse navbar-collapse" id="myNavbar" style="color: white;">
+            {% if not loggedIn %}
+            <li class="active"><a href="/login">Login</a></li>
+            {% else %}
+            <li class="dropdown" style="color: white;">
+                
+            <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"  href="#" style="color: white;font: 2em sans-serif;background: transparent;">Account
+              <span class="caret" ></span></button>
+              <ul class="dropdown-menu" id="" style="color: white;">
+                <li class="dropdown-item"><a href="#" >Your orders</a></li>
+                <li class="dropdown-item"><a href="#">Your profile</a></li>
+                <li class="dropdown-item"><a href="/logout">Sign Out</a></li>
+                <li class="dropdown-item"><a href="/cart">Cart - {{noOfItems}}</a></li>
+              </ul>
+            </li>
+            
+            </ul>
+            {% endif %}
+            </div>
+        </div>
+      </nav>
+      <div class="container-fluid">
+      <div class="split left" style="color: white;;">
+        <h1>{{data[1]}}</h1>
+      <img src={{url_for('static', filename='uploads/'+data[4]) }} id="productImage" style="width: 300px;"/>
+      </div>
+      <div class="split right" style="color: white;">
+        <div id="productDescription">
+          <h2>Details</h2>
+          <table id="descriptionTable">
+            <tr>
+              <td>Name :</td>
+              <td>{{data[1]}}</td>
+            </tr>
+            <tr>
+              <td>Price :</td>
+              <td>Rs{{data[2]}}</td>
+            </tr>
+            <tr>
+              <td>Stock :</td>
+              <td>{{data[5]}}</td>
+            </tr>
+          </table>
+          <h2>Description</h2>
+          <p>{{data[3]}}</p>
+        </div>
+        <div id="addToCart">
+          <a href="/addToCart?productId={{request.args.get('productId')}}">Add to Cart</a>
+        </div>
+      </div>
+      <div style="width: 100%;">
+      
+      </div>
+      </div>
+      <div style="margin-left: 60px;margin-right: 100px;margin-top:20px;border: 2px solid wheat;" class="container">
+        <h1 style="text-align: center;color: white;">Reviews</h1>
+        <ul class="list-group">
+        {% for row in review %}
+        
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+          <li class="list-group-item" style="background: none;border: none;">
+        <p style="color: black;font: 2em sans-serif;">{{row[1]}}</p>
+        
+        <h3 style="color: black;"> - {{row[0]}}</h3>
+        </li>
+      </div>
+      <br>
+        {% endfor %}
+      </ul>
+        </div>
+    </body>
+    </html>

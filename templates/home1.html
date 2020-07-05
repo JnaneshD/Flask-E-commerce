@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Welcome</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ <style>
+     .split {
+  width: 48%;
+    overflow-x: hidden;
+    position: fixed;
+
+  padding-top: 20px;
+}
+.left {
+  left: 0;
+}
+
+/* Control the right side */
+.right {
+  right: 0;
+}
+@import url('https://fonts.googleapis.com/css?family=Meie+Script|Shadows+Into+Light|Arvo|Monda');
+.font_shadows_into_light {
+  font-family: 'Shadows Into Light', cursive;
+}
+ </style>
+</head>
+<body  style="background-image:url({{ url_for('static', filename='images/black1.jpg') }});background-attachment: fixed;background-size: cover;">
+    <nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse" style="background: transparent;border: transparent;">
+        <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>                        
+              </button>
+        {% if loggedIn %}          
+            <a class="navbar-brand" href="#" style="color: white;">Hello,{{firstName}}{{data}}</a>
+        {% else %}
+            <a class="navbar-brand" href="#" style="color: azure;">Welcome to FPR</a>
+        {% endif %} 
+        </div>
+        <div class="nav navbar-nav navbar-right">
+          <ul class="collapse navbar-collapse" id="myNavbar" style="color: white;">
+            {% if not loggedIn %}
+            <li class="active"><a href="/login" style="color: white;font: 2em sans-serif;background: transparent;">Login</a></li>
+            {% else %}
+            <li class="dropdown" style="color: white;">
+                
+            <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"  href="#" style="color: white;font: 2em sans-serif;background: transparent;">Account
+              <span class="caret" ></span></button>
+              <ul class="dropdown-menu" id="" style="color: white;">
+                <li class="dropdown-item"><a href="/order" >Your orders</a></li>
+                <li class="dropdown-item"><a href="/profile">Your profile</a></li>
+                <li class="dropdown-item"><a href="/logout">Sign Out</a></li>
+                <li class="dropdown-item"><a href="/reviews">Write Reviews</a></li>
+                <li class="dropdown-item"><a href="/cart">Cart - {{noOfItems}}</a></li>
+              </ul>
+            </li>
+            
+            </ul>
+            {% endif %}
+            </div>
+        </div>
+      </nav>
+      <div class="w3-container w3-center w3-animate-zoom">
+      <h1 style="color: white;text-align: center;font-weight: 1200;font-size: 39pt; " class="font_shadows_into_light">STAY HOME AND SHOP ONLINE</h1>
+      </div>
+      <div class="split left" style="color: aliceblue;border: 2px solid #f92027;">
+		<h2 style="margin-left: 10px;">  Shop by Category: </h2>
+		<ul>
+            {% for row in categoryData %}
+            
+                <li><a href="/displayCategory?categoryId={{row[0]}}" class="w3-animate-top" style="font-size: 18pt;color: antiquewhite;overflow: scroll;">{{row[1]}}</a></li>
+            <br>
+			{% endfor %}
+		</ul>
+	</div>
+    <div class="split right" style="border: 2px solid red;color: azure;">
+        <h4 style="margin-left: 10px;text-align: center;">Shop now and write your reviews!!</h1>
+        <h3 style="margin-left: 10px;text-align: center;">We'll try to detect fake reviews</h1>
+        <img src="{{url_for('static', filename='images/fake.png')}}" class="w3-animate-zoom" style="width: 80%;margin-left: 50px;margin-bottom: 100px;">
+    </div>
+</body>
+</html>

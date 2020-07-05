@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Website Example</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+  <style>
+  .fakeimg {
+    height: 200px;
+    background: transparent;
+  }
+  
+  #divbody{
+      background-color: black;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+  max-width:100%
+  }
+  .contain{
+      margin-left: 90px;
+      margin-right: 90px;
+  }
+  #fpr{
+   color: white;
+   text-shadow:0px 0px 0 rgb(137,156,213),1px 1px 0 rgb(129,148,205),2px 2px 0 rgb(120,139,196),3px 3px 0 rgb(111,130,187),4px 4px 0 rgb(103,122,179);
+}
+
+.relief {
+  background-color: #3a50d9;
+  color: #e0eff2;
+  font: italic bold 100px Georgia, Serif;
+  text-shadow: -4px 3px 0 #3a50d9, -14px 7px 0 #0a0e27;
+}
+  
+  </style>
+  <script>
+    var vm = new Vue({
+            el: '#databinding',
+            data: {
+               styleobj : {
+                color: "red"
+               }
+            },
+            methods : {
+               changebgcolor : function() {
+                  this.styleobj.Color = "green";
+               },
+               originalcolor : function() {
+                  this.styleobj.Color = "red";
+               }
+            },
+         });
+      </script>
+  </script>
+</head>
+<body style="background: transparent;">
+
+<div id="divbody" style="background-image: url({{ url_for('static', filename='images/fli.jpg') }});">
+<nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse" style="background: transparent;color: #fff;border: transparent;">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#" style="color: white;">FPRR</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav" style="color: white;">
+        <li class=""><a href="#" style="color: white;">Home</a></li>
+        <li><a href="/registerationForm" style="color: white;">Register</a></li>
+        <li><a href="/login" style="color: white;">Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="contain" id="databinding">
+
+<div class="jumbotron text-center" style="background-size: cover;background-attachment: fixed;
+background-position: center;margin-bottom:0;background-color: crimson;color:#fff;background: transparent;">
+    <h1 style="box-shadow: burlywood;" id="fpr" class="w3-animate-zoom"> Welcome to FPRR Home Page</h1>
+    <a href="/login" style="color: #fff;" class="w3-animate-left"><p>Login to write reviews to our products</p></a>
+    </div>
+</div>
+
+<div class="contain" style="background-attachment: fixed;
+background-position: center;background: transparent;color: #fff;">
+  <div class="row">
+    <div class="col-sm-4">
+      <h2 class="w3-animate-bottom">WT2</h2>
+      <div class="fakeimg"></div>
+     
+      <h2>Team members</h2>
+      <ul class="nav nav-pills nav-stacked">
+        <li class="#"><a href="#" style="color: white;font-size: larger;">Jnanesh D</a></li>
+        <li><a href="#" style="color: white;font-size: larger;">Sujay Gad</a></li>
+        <li><a href="#" style="color: white;font-size: larger;">Mayur RB</a></li>
+      </ul>
+      <hr class="hidden-sm hidden-md hidden-lg">
+    </div>
+    <div class="col-sm-8">
+      <h2 class="w3-animate-bottom">What are fake reviews</h2>
+      <h5></h5>
+      <div class="w3-animate-bottom">
+      <div class="fakeimg">They’re reviews which are designed specifically to give a false impression to consumers on the point of purchasing.
+
+        They don’t accurately reflect the product or service they’re talking about because they are designed to go after your wallet in the same way as “fake news” aims to dupe your thought processes.
+        
+        You’ll see both positive and negative fake reviews.</div>
+      <h2>Fake positives</h2>
+      <p>“Fake positives” are the glowing reports that bear no resemblance to reality. The e-book example above. The hotel you book only to find its “spacious bedrooms” mean you don’t have room to unpack your suitcase and its “beachside location” has an inter-city train line running between it and the beach.</p>
+      <br>
+      <h2>Fake Negatives</h2>
+      <p>“Fake negatives” are those that persuade you not to eat at a certain restaurant because it’s “known to have cockroaches in the kitchen” or not to go to a particular counsellor because “she ruined my life forever.”</p>
+    </div>
+    </div>
+  </div>
+</div>
+<div class="contain">
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+  
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+      <div class="item active">
+        <img src="{{url_for('static', filename='images/slide1.png')}}"" alt="Los Angeles">
+      </div>
+  
+      <div class="item">
+        <img src="{{url_for('static', filename='images/slide2.jpg')}}"" alt="Chicago">
+      </div>
+  
+      <div class="item">
+        <img src="{{url_for('static', filename='images/slider3.jpg')}}"" alt="New York">
+      </div>
+    </div>
+  
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+  <footer class=""></footer>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Welcome</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ <style>
+     
+     .table>tbody>tr>td, .table>tfoot>tr>td{
+    vertical-align: middle;
+}
+@media screen and (max-width: 600px) {
+    table#cart tbody td .form-control{
+		width:20%;
+		display: inline !important;
+	}
+	.actions .btn{
+		width:36%;
+		margin:1.5em 0;
+	}
+	
+	.actions .btn-info{
+		float:left;
+	}
+	.actions .btn-danger{
+		float:right;
+	}
+	
+	table#cart thead { display: none; }
+	table#cart tbody td { display: block; padding: .6rem; min-width:320px;}
+	table#cart tbody td:before {
+		content: attr(data-th); font-weight: bold;
+		display: inline-block; width: 8rem;
+	}
+
+	
+	table#cart tfoot td{display:block; }
+	table#cart tfoot td .btn{display:block;}
+	
+}
+ </style>
+ <style>
+     .row{
+        pointer-events: none;	
+     }
+ </style>
+ <script>
+     row=null;
+     obj={
+         rev:null,
+         xhr:null,
+         sendReview:function(product)
+         {
+            var formData = new FormData();
+            row=product;//document.getElementById(product);
+             user=document.getElementById("user").innerHTML;
+             this.xhr=new XMLHttpRequest();
+             rev=document.getElementById('t'+product);
+             alert(rev.value);
+             if(rev.value=="")
+             {
+                 alert("Nothing to write");
+             }
+             else{
+                formData.append('user', user);
+                formData.append('product', product);
+                formData.append('review', rev.value);
+             this.xhr.open("POST","http://localhost:5000/writereview",true);
+             this.xhr.send(formData);
+             this.xhr.onreadystatechange=this.update;
+             }
+         },
+         update:function() {
+            if (this.readyState==4 && this.status==200) {
+                rev.value=""
+                //this.row.parentNode.removeChild(row);
+                obj.deleteRow(row);
+            }
+         },
+         deleteRow:function(rowid)  
+        {   
+              var row = document.getElementById(rowid);
+              var table = row.parentNode;
+              while ( table && table.tagName != 'TABLE' )
+                    table = table.parentNode;
+              if ( !table )
+                     return;
+              table.deleteRow(row.rowIndex);
+        }
+     }
+ </script>
+ </head>
+ <body>
+    <body  style="background-image:url({{ url_for('static', filename='images/panther.jpg') }});background-size: cover;">
+        <nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse" style="background: transparent;border: transparent;">
+            <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>                        
+                  </button>
+
+           <a class="navbar-brand" href='/some' style="color: blanchedalmond;">Hello,</a>
+            {% if loggedIn %}          
+                <p class="navbar-brand" id="user" style="color: white;">{{firstName}}</p>
+            {% else %}
+                <a class="navbar-brand" href="/some" style="color: azure;">Welcome to FPR</a>
+            {% endif %} 
+            </div>
+            <div class="nav navbar-nav navbar-right">
+              <ul class="collapse navbar-collapse" id="myNavbar" style="color: white;">
+                {% if not loggedIn %}
+                <li class="active"><a href="/login">Login</a></li>
+                {% else %}
+                <li class="dropdown" style="color: white;">
+                    
+                <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"  href="#" style="color: white;font: 2em sans-serif;background: transparent;">Account
+                  <span class="caret" ></span></button>
+                  <ul class="dropdown-menu" id="" style="color: white;">
+                    <li class="dropdown-item"><a href="/some" >Home</a></li>
+                    <li class="dropdown-item"><a href="/order" >Your orders</a></li>
+                    <li class="dropdown-item"><a href="/profile">Your profile</a></li>
+                    <li class="dropdown-item"><a href="/reviews">Write Reviews</a></li>
+                    <li class="dropdown-item"><a href="/logout">Sign Out</a></li>
+                  </ul>
+                </li>
+                
+                </ul>
+                {% endif %}
+                </div>
+            </div>
+          </nav>
+          <h2 style="color: whitesmoke;margin-left: 80px;">Your Orders</h2>
+          <div class="container" style="color: white;">    
+            <table id="cart" class="table table-condensed">
+              <thead>
+                  <tr>
+                      <th style="width:50%">Product</th>
+                      <th style="width:50%"></th>
+                  </tr>
+              </thead>
+            {% for row,value in products.items() %}
+            <tbody>
+                <tr id={{row[0]}}>
+                    <td data-th="Product">
+                        <div class="row">  
+                            <div class="col-sm-4 hidden-xs"><img src={{url_for('static', filename='uploads/'+row[3])}} alt="" style="width: 150px;margin-top: 10px;"/></div>
+                            <div class="col-sm-6" style="max-height: 250px;">
+                                <h4 class="nomargin">{{row[1]}}</h4>
+                                <p style="text-overflow: ellipsis;overflow: hidden;">{{row[-3]}}</p>
+                            </div>
+                        
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row" style="margin-left: 120px;">  
+                            <div class="col-sm-8">
+                                <h2>Ordered on </h2>
+                                <h2>{{row[-1]}}</h2>
+                            </div>
+                        </div>
+                        </td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+        </body>
+    </html

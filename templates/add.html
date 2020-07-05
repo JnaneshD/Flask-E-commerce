@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Welcome</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<style>
+#dem{
+    text-decoration: none;
+}
+</style>
+</head>
+
+<body style="background-image:url({{ url_for('static', filename='images/black-red.jpg') }});background-attachment: fixed;background-size: cover;">
+    <form action="/addItem" name="registration" method="POST" class="form-horizontal" style="color: blanchedalmond;margin-top: 60px;margin-bottom: 20px;margin-left: 37%; margin-right: 10px;"  enctype="multipart/form-data">
+        <h1>ADD A PRODUCT</h1>
+
+        <a href="/checklogin" style="color: white;margin-left: 80%;">Back</a>    
+        <div class="form-group">
+            <label for="email">Name:</label>
+            <input type="text" class="form-control" name="name" style="width: 50%;" required>
+          </div>
+        <div class="form-group">
+            <label for="email">Price:</label>
+            <input type="number" class="form-control" name="price" style="width: 50%;" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Description:</label>
+            <textarea class="form-control" name="description" style="width: 50%;" required></textarea>
+          </div>
+        <div class="form-group">
+          <label for="pwd">Image:</label>
+          <input type="file" class="form-control"  name="image" style="width: 50%;" required> 
+        </div>
+        <div class="form-group">
+          <label for="pwd">Stock:</label>
+          <input type="text" class="form-control" name="stock" style="width: 50%;" required> 
+        </div>
+        <div class="form-group">
+            <label for="pwd">Category:</label>
+            <br>
+            <select name="category" style="width: 50%;color: #000;">
+                {% for row in categories %}
+                    <option value="{{row[0]}}" style="color: black;">{{row[1]}}</option>
+                {% endfor %}
+            </select><br>          </div>
+        <button type="submit" id="submit" style="margin-left:18%;margin-bottom: 10px;" class="btn btn-default">Submit</button>
+      </form>
+</body>
+</html>

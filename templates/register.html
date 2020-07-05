@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Website Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  
+  <style>
+  .fakeimg {
+    height: 200px;
+    background: #aaa;
+  }
+  .jumb{
+    background-image: 'images/header.jpg';
+  }
+  body{
+      background-color: black;
+  }
+  .contain{
+      margin-left: 90px;
+      margin-right: 90px;
+  }
+  #head:hover{
+    color: blanchedalmond;
+    font-family: fantasy;
+  }
+  </style>
+  <script type="text/javascript">
+    
+    $(document).ready(function(){
+      $("#email1").focusout(function(){
+        var str=$("#email1").val();
+        if(str==""){alert("Enter the email address");}
+        else{
+        $.get('/formvalidate', {name:str}, function (data) {
+            if(data=="1")
+            {
+              alert("Email is already registered .Login to continue");
+              $("#submit").prop('disabled', true);
+            }
+            else{
+              $("#submit").prop('disabled', false);
+            }
+          });
+        }
+      });
+    });
+    
+    $('#email').on('input', function() {
+  	var input=$(this);
+  	var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  	var is_email=re.test(input.val());
+  	if(is_email){}
+  	else{alert("invalid");}
+  });
+  </script>
+
+</head>
+<body style="background-image: url({{ url_for('static', filename='images/head.jpg') }})">
+    
+    <div class="container" style="border: 2px solid white;margin-top: 50px;">
+        <h1 style="text-align: center;color: white;font-size: 60pt;" id="head"> REGISTER</h1>
+        <form action="/register" name="registration" method="POST" class="form-horizontal" style="color: blanchedalmond;margin-top: 60px;margin-bottom: 20px;margin-left: 37%; margin-right: 10px;">
+            <div class="form-group">
+                <label for="email">Name:</label>
+                <input type="text" ng-model="Name" class="form-control" id="name" name="Name" style="width: 50%;" required>
+              </div>
+            <div class="form-group">
+                <label for="email">Email address:</label>
+                <input type="email" class="form-control" id="email1" name="email" style="width: 50%;" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Phone:</label>
+                <input type="number" class="form-control" id="phone" name="phone" style="width: 50%;" required>
+              </div>
+            <div class="form-group">
+              <label for="pwd">Password:</label>
+              <input type="password" class="form-control" id="pwd" name="password" style="width: 50%;" required> 
+            </div>
+            <div class="form-group">
+              <label for="pwd">Address:</label>
+              <input type="text" class="form-control" id="address" name="address" style="width: 50%;" required> 
+            </div>
+            <button type="submit" id="submit" style="margin-left:18%;margin-bottom: 10px;" class="btn btn-default">Submit</button>
+          </form>
+        <p style="color: white;margin-left:35% ;">Already have an account? <a href="/login" style="color: thistle;">Login</a></p>
+    </div>
+</body>
+</html>

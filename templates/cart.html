@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Welcome</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ <style>
+     
+     .table>tbody>tr>td, .table>tfoot>tr>td{
+    vertical-align: middle;
+}
+@media screen and (max-width: 600px) {
+    table#cart tbody td .form-control{
+		width:20%;
+		display: inline !important;
+	}
+	.actions .btn{
+		width:36%;
+		margin:1.5em 0;
+	}
+	
+	.actions .btn-info{
+		float:left;
+	}
+	.actions .btn-danger{
+		float:right;
+	}
+	
+	table#cart thead { display: none; }
+	table#cart tbody td { display: block; padding: .6rem; min-width:320px;}
+	table#cart tbody td:before {
+		content: attr(data-th); font-weight: bold;
+		display: inline-block; width: 8rem;
+	}
+
+	
+	table#cart tfoot td{display:block; }
+	table#cart tfoot td .btn{display:block;}
+	
+}
+ </style>
+ <style>
+     .row{
+        pointer-events: none;	
+     }
+ </style>
+ <body>
+    <body  style="background-image:url({{ url_for('static', filename='images/realblack.jpg') }});background-attachment: fixed;background-size: cover;">
+        <nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse" style="background: transparent;border: transparent;">
+            <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>                        
+                  </button>
+            {% if loggedIn %}          
+                <a class="navbar-brand" href="/some" style="color: white;">Hello,{{firstName}}</a>
+            {% else %}
+                <a class="navbar-brand" href="#" style="color: azure;">Welcome to FPR</a>
+            {% endif %} 
+            </div>
+            <div class="nav navbar-nav navbar-right">
+              <ul class="collapse navbar-collapse" id="myNavbar" style="color: white;">
+                {% if not loggedIn %}
+                <li class="active"><a href="/login">Login</a></li>
+                {% else %}
+                <li class="dropdown" style="color: white;">
+                    
+                <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"  href="#" style="color: white;font: 2em sans-serif;background: transparent;">Account
+                  <span class="caret" ></span></button>
+                  <ul class="dropdown-menu" id="" style="color: white;">
+                    <li class="dropdown-item"><a href="#" >Your orders</a></li>
+                    <li class="dropdown-item"><a href="#">Your profile</a></li>
+                    <li class="dropdown-item"><a href="/logout">Sign Out</a></li>
+                    <li class="dropdown-item"><a href="/cart">Cart - {{noOfItems}}</a></li>
+                  </ul>
+                </li>
+                
+                </ul>
+                {% endif %}
+                </div>
+            </div>
+          </nav>
+          <div style="margin-left: 5%;">
+          <h1 style="color:white;">Shopping cart</h1>
+          <br>
+          </div>
+          <div class="container" style="color: white;">    
+          <table id="cart" class="table table-condensed">
+            <thead>
+                <tr>
+                    <th style="width:50%">Product</th>
+                    <th style="width:10%">Price</th>
+                    <th style="width:8%">Quantity</th>
+                    <th style="width:22%" class="text-center">Subtotal</th>
+                    <th style="width:10%"></th>
+                </tr>
+            </thead>
+            {% for row,value in dat.items() %}
+            <tbody>
+                <tr>
+                    <td data-th="Product">
+                        <div class="row">
+                            <div class="col-sm-4 hidden-xs"><img src={{url_for('static', filename='uploads/'+row[3])}} alt="" style="width: 150px;margin-top: 10px;"/></div>
+                            <div class="col-sm-6" style="">
+                                <h4 class="nomargin" style="text-overflow: ellipsis;overflow: hidden;">{{row[1]}}</h4>
+                                <p style="text-overflow: ellipsis;max-height: 200px;overflow: hidden;">{{row[-1]}}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td data-th="Price">Rs{{row[2]}}</td>
+                    <td data-th="Quantity">
+                        <p class="form-control text-center">{{value}}</p>
+                    </td>
+                    <td data-th="Subtotal" class="text-center">{{row[2]*value}}</td>
+                    <td class="actions" data-th="">
+                        <a href="/removeFromCart?productId={{row[0]}}" style="color: white;">Remove</a>
+                        <button class="btn btn-danger btn-sm" onclick="window.location.href='/removeFromCart?productId={{row[0]}}'"><i class="fa fa-trash-o"></i></button>								
+                    </td>
+                </tr>
+            </tbody>
+            {% endfor %}
+            <tfoot>
+                <tr class="visible-xs">
+                </tr>
+                <tr>
+                    <td><a href="/some" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+                    <td colspan="2" class="hidden-xs"></td>
+                    <td class="hidden-xs text-center"><strong>Total Rs{{totalPrice}}</strong></td>
+                    <td><a href="/invoice" class="btn btn-success btn-block">Place Order <i class="fa fa-angle-right"></i></a></td>
+                </tr>
+            </tfoot>
+            </table>
+            </div>
+ </body>

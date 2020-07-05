@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Welcome</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body  style="background-image:url({{ url_for('static', filename='images/realblack.jpg') }});background-size: cover;">
+    <h2 style="color: whitesmoke;margin-left: 80px;">Fake Reviews</h2>
+    <a href="/checklogin" style="color: white;margin-left: 80%;">Back</a>
+    <div class="container" style="color: white;">    
+      <table id="cart" class="table table-condensed">
+        <thead>
+            <tr>
+                <th style="width:50%">Product</th>
+                <th style="width:50%"></th>
+            </tr>
+        </thead>
+      {% for col in data %}
+      <tbody>
+          {% for row in col %}
+          {% if row[-3] %}
+          <tr id={{row[0]}}>
+              <td style="max-width: 300px;">
+                  <div class="">  
+                      <div class="col-sm-5"><img src={{url_for('static', filename='uploads/'+row[3])}} alt="" style="width: 150px;margin-top: 10px;"/></div>
+                      <div class="col-sm-3" style="max-height: 250px;">
+                          <h4 class="nomargin">{{row[1]}}</h4>
+                          <p>Review by :</p>
+                          <p style="text-overflow: ellipsis;overflow: hidden;">{{row[6]}}</p>
+                          <p></p>
+                      </div>
+                      
+                  </div>
+              </td>
+              <td>
+                  <div class="" style="">  
+                      <div class="col-sm-3" style="width: 100px;">
+                          <p>IP address</p>
+                          <p>{{row[-1]}}</p>
+                      </div>
+                      <div class="col-sm-3" style="width: 100px;">
+                        <p>Review</p>
+                        <p>{{row[-4]}}</p>
+                    </div>
+                  </div>
+                  </td>
+                  <td>
+                    <div class="col-sm-5" style="max-height: 250px;">
+                        <P>Reason</P>
+                        <p>{{row[-2]}}</p>
+                    </div>
+                  
+                  </td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+      </tbody>
+      {% endfor %}
+  </table>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Welcome</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body  style="background-image:url({{ url_for('static', filename='images/realblack.jpg') }});background-attachment: fixed;background-size: cover;">
+    <nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse" style="background: transparent;border: 0;"> 
+        <div class="container-fluid">
+            {% if loggedIn %}
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#" style="color: white;">Hello,{{firstName}}</a>
+            </div>
+          {% else %}
+          <div class="navbar-header">
+              <a class="navbar-brand" href="#" style="color: azure;">Welcome to FPR</a>
+            </div>
+          {% endif %} 
+          <ul class="nav navbar-nav navbar-right">
+            {% if not loggedIn %}
+            <li class="active"><a href="/login" style="color: white;">Login</a></li>
+            {% else %}
+            <li><a href="/some" style="color: white;">Home</a></li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" >Account
+              <span class="caret"></span></a>
+
+              <ul class="dropdown-menu">
+                <li><a href="#" >Your orders</a></li>
+                <li><a href="#" >Your profile</a></li>
+                <li><a href="/logout" >Sign Out</a></li>
+              </ul>
+            </li>
+            
+            <li><a href="/cart" style="color: white;">Cart - {{noOfItems}}</a></li>
+            </ul>
+            {% endif %}
+        </div>
+      </nav>
+      <div>
+        <h2 style="color: white; font: x-large;">Showing all products of Category {{categoryName}}:</h2>
+        {% for itemData in data %}
+        <div class="row" style="margin-left: 10px;">
+            {% for row in itemData %}
+            <div class="col-sm-4"><p style="color: whitesmoke;margin-left: 10px;">{{row[1]}}</p>
+                <a href="/productDescription?productId={{row[0]}}" class="w3-hover-opacity">
+					        <img src={{ url_for('static', filename='uploads/' + row[3]) }} style="width: 300px;height: 280px;" />
+                </a>
+                <p style="color: whitesmoke;">Price : Rs{{row[2]}}</p>
+            </div>
+            {% endfor %}
+          </div>
+	
+	{% endfor %}
+
+      </div>
+
+
+    </body>
+    </html>

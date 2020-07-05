@@ -1,0 +1,36 @@
+<html>
+   <head>
+      <title>VueJs Instance</title>
+   </head>
+   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+   <body>
+      <div id="example-1">
+        <button v-on:click="counter += 1">Add 1</button>
+        <p>The button above has been clicked {{'{{ counter }} '}}  times.</p>
+        
+      </div>
+      <div id='demo'>
+        <div v-show="active">Show</div>
+        <div @mouseover="mouseOver">Hover over me!</div>
+    </div>
+      <script type = "text/javascript">
+          var example1 = new Vue({
+            el: '#example-1',
+            data: {
+            counter: 0
+            }
+        })
+        var demo = new Vue({
+    el: '#demo',
+    data: {
+        active: false
+    },
+    methods: {
+        mouseOver: function(){
+            this.active = !this.active;   
+        }
+    }
+});
+      </script>
+   </body>
+</html>

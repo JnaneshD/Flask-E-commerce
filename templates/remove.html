@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Welcome</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<style>
+#dem{
+    text-decoration: none;
+}
+</style>
+
+
+<body  style="background-image:url({{ url_for('static', filename='images/black-red.jpg') }});background-attachment: fixed;background-size: cover;">
+    
+    <a href="/checklogin" style="color: white;margin-left: 80%;">Back</a>
+    {% for itemData in data %}
+    <div  id="main" class="row" style="margin-left: 10px;">
+        {% for row in itemData %}
+        <div class="col-sm-4"><p style="color: whitesmoke;margin-left: 10px;">{{row[1]}}</p>
+            <a href="/removeItem?productId={{row[0]}}">
+                        <img  v-on:click="submitBut" src={{ url_for('static', filename='uploads/' + row[4]) }} style="width: 300px;height: 280px;" />
+            </a>
+            <p style="color: whitesmoke;">Price : Rs{{row[2]}}</p>
+        </div>
+        {% endfor %}
+      </div>
+
+{% endfor %}
+</body>
+<script>
+    var demo = new Vue({
+    el: '#demo',
+    data: {
+        
+    },
+    methods: {
+        submitBut: function() {
+      alert("Are you sure you want to delete?");
+    }
+    }
+});
+</script>
